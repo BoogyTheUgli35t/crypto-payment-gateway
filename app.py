@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 app = Flask(__name__)
-API_KEY = os.getenv("NOWPAYMENTS_API_KEY")
+API_KEY = os.getenv("AY7V4ZP-DQKMS08-HARPVTJ-52WWMFE")
 
 @app.route("/", methods=["GET", "POST"])
 def index():
