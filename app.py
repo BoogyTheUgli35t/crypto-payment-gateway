@@ -1,13 +1,15 @@
- 
 import os
 from flask import Flask, request, render_template, redirect
 import requests
 from dotenv import load_dotenv
 
+# Load .env file
 load_dotenv()
 
 app = Flask(__name__)
-API_KEY = os.getenv("AY7V4ZP-DQKMS08-HARPVTJ-52WWMFE")
+
+# ✅ CORRECT: get value from ENV VAR named 'NOWPAYMENTS_API_KEY'
+API_KEY = os.getenv("NOWPAYMENTS_API_KEY")
 
 @app.route("/", methods=["GET", "POST"])
 def index():
@@ -27,6 +29,11 @@ def index():
         }
         response = requests.post("https://api.nowpayments.io/v1/payment", json=payload, headers=headers)
         data = response.json()
+
+        # Handle API error (optional)
+        if "invoice_url" not in data:
+            return f"Error: {data}", 500
+
         return redirect(data["invoice_url"])
     return render_template("index.html")
 
